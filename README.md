@@ -1,4 +1,5 @@
 # discord-http-kit
+
 A lightweight HTTP-based Discord bot framework built with @discordjs/core and discord-api-types for self, designed to simplify the development process by streamlining command creation and API integration.
 
 ## Get Start
@@ -6,10 +7,10 @@ A lightweight HTTP-based Discord bot framework built with @discordjs/core and di
 ### Example Usage
 
 ```typescript
-import { Core, commandFileBuilder } from 'discord-http-kit';
+import { Client, commandFileBuilder } from 'discord-http-kit';
 
-// * Configures the Core class for Discord
-const core = new Core({
+// * Configures the Client class for Discord
+const core = new Client({
     clientId: '123456789012345678',
     clientSecret: 'your_client_secret',
     clientToken: 'your_client_token',
@@ -36,7 +37,6 @@ export const help = commandFileBuilder({
         };
     },
 });
-
 ```
 
 ### License

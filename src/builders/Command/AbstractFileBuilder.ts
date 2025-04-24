@@ -1,13 +1,11 @@
 import { FileBuilder } from '..';
-import {
-    APIInteractionResponse,
-} from '@discordjs/core';
+import { APIInteractionResponse } from '@discordjs/core';
 import { Awaitable } from '@discordjs/util';
 
 export abstract class AbstractFileBuilder<
     RegisterType,
     InteractionType,
-    ResponseType = APIInteractionResponse
+    ResponseType = APIInteractionResponse,
 > extends FileBuilder<RegisterType, InteractionType, ResponseType> {
     override register: RegisterType;
     override execute: (interaction: InteractionType) => Awaitable<ResponseType>;

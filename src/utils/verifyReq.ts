@@ -7,11 +7,11 @@ import { Interaction } from '../index';
 
 /**
  * Verifies the authenticity of a Discord interaction request
- * 
+ *
  * This function validates that the incoming request is legitimately from Discord by checking
  * the request signature against the application's public key using the Ed25519 algorithm.
  * It follows Discord's security verification protocol as documented in their API guidelines.
- * 
+ *
  * @param request - The incoming Discord interaction request object
  * @param appPublicKey - Your Discord application's public key (hexadecimal string)
  * @returns A promise resolving to either an object indicating failure, or an object containing
