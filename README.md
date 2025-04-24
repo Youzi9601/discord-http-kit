@@ -9,7 +9,7 @@ A lightweight HTTP-based Discord bot framework built with @discordjs/core and di
 ```typescript
 import { Client, commandFileBuilder } from 'discord-http-kit';
 
-// * Configures the Core class for Discord
+// * Configures the Client class for Discord
 const core = new Client({
     clientId: '123456789012345678',
     clientSecret: 'your_client_secret',

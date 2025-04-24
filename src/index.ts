@@ -13,7 +13,7 @@ import { REST, RESTOptions } from '@discordjs/rest';
 import { InvalidKeyError } from './utils/errors';
 import { interactionEndpoint } from './endpoint';
 import { API } from '@discordjs/core/http-only';
-import { CoreEvents, TypedEventEmitter } from './utils/event';
+import { TypedEventEmitter } from './utils/event';
 export * from './builders/index';
 
 /**
@@ -52,16 +52,12 @@ interface CoreOptions {
     rest?: Partial<Omit<RESTOptions, 'version'>>;
 }
 
-// Update TypedEventEmitter with CoreEvents
 /**
  * Client class for Discord HTTP interactions
  *
  * Provides functionality for handling Discord interactions and accessing Discord's REST API
  */
-export class Client
-    extends TypedEventEmitter<CoreEvents>
-    implements AsyncDisposable
-{
+export class Client extends TypedEventEmitter implements AsyncDisposable {
     private appPublicKey: string;
     private clientId: string;
     private clientToken: string;
@@ -111,7 +107,7 @@ export class Client
      */
     async endpoint(req: Request): Promise<Response | undefined> {
         if (req.method.toUpperCase() === 'POST') {
-            return interactionEndpoint(req, this.appPublicKey);
+            return interactionEndpoint(req, this.appPublicKey, this);
         } else {
             return new Response('Method Not Allowed', { status: 405 });
         }
