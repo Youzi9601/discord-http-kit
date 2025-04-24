@@ -1,4 +1,4 @@
-import { ContextMenuCommandBuilder  } from '@discordjs/builders';
+import { ContextMenuCommandBuilder } from '@discordjs/builders';
 import {
     APIContextMenuInteraction,
     APIInteractionResponse,
@@ -12,7 +12,9 @@ export class ContextMenuFileBuilder extends AbstractFileBuilder<
     APIContextMenuInteraction
 > {
     constructor(file: {
-        register: RESTPostAPIContextMenuApplicationCommandsJSONBody | ContextMenuCommandBuilder;
+        register:
+            | RESTPostAPIContextMenuApplicationCommandsJSONBody
+            | ContextMenuCommandBuilder;
         execute: (
             interaction: APIContextMenuInteraction
         ) => Awaitable<APIInteractionResponse>;

@@ -13,6 +13,7 @@ import { REST, RESTOptions } from '@discordjs/rest';
 import { InvalidKeyError } from './utils/errors';
 import { interactionEndpoint } from './endpoint';
 import { API } from '@discordjs/core/http-only';
+import { CoreEvents, TypedEventEmitter } from './utils/event';
 export * from './builders/index';
 
 /**
@@ -36,7 +37,7 @@ export type Interaction =
     | APIModalSubmitInteraction;
 
 /**
- * Configuration options for the Core class
+ * Configuration options for the Client class
  * @property appPublicKey - Discord application's public key for interaction verification
  * @property clientId - Discord application client ID
  * @property clientSecret - Discord application client secret
@@ -51,12 +52,16 @@ interface CoreOptions {
     rest?: Partial<Omit<RESTOptions, 'version'>>;
 }
 
+// Update TypedEventEmitter with CoreEvents
 /**
- * Core class for Discord HTTP interactions
+ * Client class for Discord HTTP interactions
  *
  * Provides functionality for handling Discord interactions and accessing Discord's REST API
  */
-export class Core {
+export class Client
+    extends TypedEventEmitter<CoreEvents>
+    implements AsyncDisposable
+{
     private appPublicKey: string;
     private clientId: string;
     private clientToken: string;
@@ -70,7 +75,12 @@ export class Core {
      * @param options - Configuration options for Discord integration
      * @throws {InvalidKeyError} If any required keys are missing
      */
-    constructor(options: CoreOptions) {
+    public constructor(options: CoreOptions) {
+        super({ captureRejections: true });
+
+        if (typeof options !== 'object') {
+            throw new InvalidKeyError('options must be an object');
+        }
         if (!options.appPublicKey) {
             throw new InvalidKeyError('appPublicKey is required');
         }
@@ -138,4 +148,23 @@ export class Core {
             );
         }
     }
+
+    /**
+     * Destroys the client instance
+     * @returns {void} Nothing
+     */
+    destroy(): void {
+        this.REST.clearHashSweeper();
+        this.REST.clearHandlerSweeper();
+    }
+
+    /**
+     * Asynchronously disposes of the client instance
+     * @returns {Promise<void>} A promise that resolves when the client is disposed
+     */
+    public async [Symbol.asyncDispose](): Promise<void> {
+        await this.destroy();
+    }
 }
+
+export default Client;

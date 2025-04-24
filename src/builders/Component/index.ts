@@ -7,93 +7,9 @@ import {
     ComponentType,
 } from '@discordjs/core';
 import { Awaitable } from '@discordjs/util';
-
-/**
- * Builder for button components.
- */
-export class ButtonComponentFileBuilder {
-    constructor(
-        private file: {
-            customId: string;
-            execute: (
-                interaction: APIMessageComponentButtonInteraction
-            ) => Awaitable<APIInteractionResponse>;
-        }
-    ) {}
-
-    /**
-     * Get the custom ID of the button component.
-     */
-    get customId() {
-        return this.file.customId;
-    }
-
-    /**
-     * Execute the button component's handler.
-     * @param interaction - The button interaction object.
-     */
-    execute(interaction: APIMessageComponentButtonInteraction) {
-        return this.file.execute(interaction);
-    }
-}
-
-/**
- * Builder for select menu components.
- */
-export class SelectMenuComponentFileBuilder {
-    constructor(
-        private file: {
-            customId: string;
-            execute: (
-                interaction: APIMessageComponentSelectMenuInteraction
-            ) => Awaitable<APIInteractionResponse>;
-        }
-    ) {}
-
-    /**
-     * Get the custom ID of the select menu component.
-     */
-    get customId() {
-        return this.file.customId;
-    }
-
-    /**
-     * Execute the select menu component's handler.
-     * @param interaction - The select menu interaction object.
-     */
-    execute(interaction: APIMessageComponentSelectMenuInteraction) {
-        return this.file.execute(interaction);
-    }
-}
-
-/**
- * Builder for modal submit components.
- */
-export class ModalSubmitComponentFileBuilder {
-    constructor(
-        private file: {
-            customId: string;
-            execute: (
-                interaction: APIModalSubmitInteraction
-            ) => Awaitable<APIInteractionResponse>;
-        }
-    ) {}
-
-    /**
-     * Get the custom ID of the modal submit component.
-     */
-    get customId() {
-        return this.file.customId;
-    }
-
-    /**
-     * Execute the modal submit component's handler.
-     * @param interaction - The modal submit interaction object.
-     */
-    execute(interaction: APIModalSubmitInteraction) {
-        return this.file.execute(interaction);
-    }
-}
+import { ButtonComponentFileBuilder } from './ButtonComponentFileBuilder';
+import { SelectMenuComponentFileBuilder } from './SelectMenuComponentFileBuilder';
+import { ModalSubmitComponentFileBuilder } from './ModalSubmitComponentFileBuilder';
 
 /**
  * Union type for all component builders.
